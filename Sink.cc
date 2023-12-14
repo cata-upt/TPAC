@@ -19,8 +19,12 @@ Define_Module(Sink);
 
 void Sink::initialize()
 {
-    lifetimeSignal = registerSignal("lifetime");
-    //delayStats.setName("Packet Delay Statistics");
+    delayStats[0].setName("user1Histogram");
+    delayStats[1].setName("user2Histogram");
+    delayStats[2].setName("user3Histogram");
+    delayVector[0].setName("user1Vector");
+    delayVector[1].setName("user2Vector");
+    delayVector[2].setName("user3Vector");
 }
 
 void Sink::handleMessage(cMessage *msg)
@@ -29,17 +33,12 @@ void Sink::handleMessage(cMessage *msg)
 
       if (msg->arrivedOn("rxPackets")) {
         int index=msg->getArrivalGate()->getIndex();
-        delayStats[index].collect(lifetime);
         EV<<"Message from user "<<index<<endl;
-        EV << "Average Delay: " << delayStats[index].getMean() << "s" << endl;
-        EV << "Minimum Delay: " << delayStats[index].getMin() << "s" << endl;
-        EV << "Maximum Delay: " << delayStats[index].getMax() << "s" << endl;
+        delayStats[index].collect(lifetime);
+        delayVector[index].record(lifetime);
       }
 
       EV << "Received " << msg->getName() << ", lifetime: " << lifetime << "s" << endl;
-     /* EV << "Average Delay: " << delayStats[index].getMean() << "s" << endl;
-      EV << "Minimum Delay: " << delayStats[index].getMin() << "s" << endl;
-      EV << "Maximum Delay: " << delayStats[index].getMax() << "s" << endl;*/
-      emit(lifetimeSignal, lifetime);
       delete msg;
 }
+

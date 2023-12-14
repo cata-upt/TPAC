@@ -26,11 +26,11 @@ using namespace omnetpp;
 class Sink : public cSimpleModule
 {
 private:
-    simsignal_t lifetimeSignal;
   protected:
     virtual void initialize();
     virtual void handleMessage(cMessage *msg);
-    cLongHistogram delayStats[3];
+    cHistogram delayStats[3];
+    cOutVector delayVector[3];
 };
 
 #endif
