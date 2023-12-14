@@ -25,7 +25,6 @@ void MyQ::initialize()
 void MyQ::handleMessage(cMessage *msg)
 
 {
-
     int ql; //=9;
     ql = queue.getLength();
     if (msg->arrivedOn("rxPackets")){

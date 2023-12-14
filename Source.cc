@@ -35,22 +35,30 @@ void Source::initialize()
 
 void Source::handleMessage(cMessage *msg)
 {
-    ASSERT(msg == sendMessageEvent);
+    /*ASSERT(msg == sendMessageEvent);
 
     cMessage *job = new cMessage("job");
-    //int index= getParentModule()->getIndex();
-    job->addPar("user").setLongValue(0);
     send(job, "txPackets");
     double sendingTime;
     sendingTime = par("sendIaTime").doubleValue();
     double netwload=par("netwload").doubleValue();
-    sendingTime =  (3*1*1)/(netwload*10);
-    EV << "sendingTime:"<<sendingTime<<endl;
+    sendingTime =  (3*1*1)/(netwload*10);*/
+   /* EV << "sendingTime:"<<sendingTime<<endl;
 
 
+    //scheduleAt(simTime()+ exponential(sendingTime), sendMessageEvent);
+
+    scheduleAt(simTime()+par("sendIaTime").doubleValue(), sendMessageEvent);*/
+
+    ASSERT(msg == sendMessageEvent);
+
+    cMessage *job = new cMessage("job");
+    send(job, "txPackets");
+    double sendingTime;
+    sendingTime = par("sendIaTime").doubleValue();
+    //scheduleAt(simTime()+ exponential(sendingTime));
     scheduleAt(simTime()+ exponential(sendingTime), sendMessageEvent);
 
-    //scheduleAt(simTime()+par("sendIaTime").doubleValue(), sendMessageEvent);
 }
 
 

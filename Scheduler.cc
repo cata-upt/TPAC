@@ -94,7 +94,7 @@ void Scheduler::handleMessage(cMessage *msg)
             EV << "NrOfBlocks["<<i<<"]= " << nrOfBlocks[i] <<endl;
             send(cmd,"txScheduling",i);
         }
-
+        scheduleAt(simTime()+par("schedulingPeriod").doubleValue(), selfMsg);
     }
 
 }
